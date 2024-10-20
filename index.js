@@ -31,7 +31,7 @@ const upload = multer({
 });
 
 app.use(express.json());
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({ origin: "https://moonshot-2.netlify.app/", credentials: true }));
 app.use(cookieParser());
 
 app.use("/signup", signUp);
