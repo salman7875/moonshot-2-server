@@ -3,6 +3,8 @@ dotenv.config();
 import express from "express";
 import multer from "multer";
 import cors from "cors";
+import path from "path";
+import os from "os";
 
 import { checkDBConnection } from "./config/db.config.js";
 import cookieParser from "cookie-parser";
@@ -16,7 +18,17 @@ import {
 } from "./controller/user.controller.js";
 
 const app = express();
-const upload = multer({ dest: "/uploads" });
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => {
+      const tempDir = os.tmpdir();
+      cb(null, tempDir);
+    },
+    filename: (req, file, cb) => {
+      cb(null, Date.now() + path.extname(file.originalname));
+    },
+  }),
+});
 
 app.use(express.json());
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
