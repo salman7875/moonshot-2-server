@@ -3,9 +3,10 @@ import jwt from "jsonwebtoken";
 
 export const verifyUser = async (req, res) => {
   try {
-    // if (!userName) {
-    //   res.status(401).json({ success: false, message: "unauthorized!" });
-    // }
+    const { userName } = req.user;
+    if (!userName) {
+      res.status(401).json({ success: false, message: "unauthorized!" });
+    }
     res.status(200).json({ success: true, message: "Authorized!" });
   } catch (err) {
     res.status(500).json({ success: false, message: err });
